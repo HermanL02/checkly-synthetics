@@ -9,7 +9,7 @@ test("get favorite pokemon and verify type", async ({ request }) => {
   await test.step("get favorite pokemon", async () => {
 
     const response = await request.get(`${baseUrl}pokemon?limit=50&offset=0`)
-    expect(response).toBeOK()
+    await expect(response).toBeOK()
 
     const data = await response.json()
     favoritePokemon = data.results.find(pokemon => pokemon.name === "pikachu");
@@ -17,7 +17,7 @@ test("get favorite pokemon and verify type", async ({ request }) => {
 
   await test.step("get pokemon form", async () => {
     const response = await request.get(`${favoritePokemon.url}`)
-    expect(response).toBeOK()
+    await expect(response).toBeOK()
 
     const pokemonForm = await response.json()
     pokemonFormURL = pokemonForm.forms[0].url
@@ -26,7 +26,7 @@ test("get favorite pokemon and verify type", async ({ request }) => {
 
   await test.step("verify pokemon type", async () => {
     const response = await request.get(`${pokemonFormURL}`)
-    expect(response).toBeOK()
+    await expect(response).toBeOK()
 
     const pokemonForm = await response.json()
     const pokemonType = pokemonForm.types[0].type.name
