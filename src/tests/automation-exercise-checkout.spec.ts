@@ -14,7 +14,7 @@ test('guest checkout redirects to signup', async ({ page }) => {
   await addBlueTopButton.click()
   const modalHeading = page.getByRole("heading", { name: "Added!"});
   await expect(modalHeading).toBeVisible();
-  await page.getByRole('link', { name: 'Continue Shopping' }).click();
+  await page.getByRole('button', { name: 'Continue Shopping' }).click();
   await page.getByRole('link', { name: 'Cart'}).click();
   await page.getByText('Proceed To Checkout').click();
   await page.getByRole('link', { name: 'Register / Signup'}).click();
