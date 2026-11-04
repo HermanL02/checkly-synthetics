@@ -1,17 +1,17 @@
 {
-  "name": "advanced-project",
+  "name": "checkly-synthetics",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "Checkly monitoring as code: Playwright browser checks and JSON-driven API checks",
   "type": "commonjs",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test:local": "playwright test",
+    "test": "checkly test",
+    "deploy": "checkly deploy"
   },
-  "author": "",
-  "license": "ISC",
   "devDependencies": {
-    "@playwright/test": "^1",
-    "checkly": "latest",
-    "dotenv": "^16.0.0"
-  }
+    "@playwright/test": "1.58.2",
+    "checkly": "10.1.0",
+    "dotenv": "16.6.1"
+  },
+  "private": true
 }

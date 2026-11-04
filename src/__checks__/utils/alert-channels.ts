@@ -14,7 +14,7 @@ const sendDefaults = {
   sslExpiryThreshold: 30
 }
 
-export const emailChannel = new EmailAlertChannel('email-channel-1', {
-  address: 'alerts@acme.com',
+export const emailChannel = new EmailAlertChannel('raccoon-email-alerts', {
+  address: 'raccoon@checklyhq.com',
   ...sendDefaults
 })

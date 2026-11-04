@@ -6,13 +6,13 @@ import { AlertEscalationBuilder, RetryStrategyBuilder } from 'checkly/constructs
  */
 const config = defineConfig({
   /* A human friendly name for your project */
-  projectName: 'Advanced Example Project',
+  projectName: 'Raccoon Synthetics',
   /** A logical ID that needs to be unique across your Checkly account,
    * See https://www.checklyhq.com/docs/cli/constructs/ to learn more about logical IDs.
    */
-  logicalId: 'advanced-example-project',
+  logicalId: 'raccoon-synthetics',
   /* An optional URL to your Git repo to be shown in your test sessions and resource activity log */
-  /* repoUrl: 'https://github.com/checkly/checkly-cli', */
+  repoUrl: 'https://github.com/HermanL02/checkly-synthetics',
   /* Sets default values for Checks */
   checks: {
     /* A default for how often your Check should run in minutes */
@@ -20,11 +20,11 @@ const config = defineConfig({
     /* Checkly data centers to run your Checks as monitors */
     locations: ['us-east-1', 'eu-central-1'],
     /* An optional array of tags to organize your Checks */
-    tags: ['mac'],
+    tags: ['cli'],
     /** The Checkly Runtime identifier, determining npm packages and the Node.js version available at runtime.
      * See https://www.checklyhq.com/docs/cli/npm-packages/
      */
-    runtimeId: '2025.04',
+    runtimeId: '2026.04',
     /* Failed check runs will not be retried per default */
     retryStrategy: RetryStrategyBuilder.noRetries(),
     /* All checks will have this alert escalation policy defined */
