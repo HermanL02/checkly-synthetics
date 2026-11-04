@@ -20,7 +20,8 @@ test("get favorite pokemon and verify type", async ({ request }) => {
     expect(response).toBeOK()
 
     const pokemonForm = await response.json()
-    pokemonFormURL = pokemonForm.forms.url
+    pokemonFormURL = pokemonForm.forms[0].url
+    // console.log('forms =', pokemonForm.forms, '| url =', pokemonFormURL)
   })
 
   await test.step("verify pokemon type", async () => {
