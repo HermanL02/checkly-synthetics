@@ -4,7 +4,7 @@ Monitoring as code for your synthetics, deployed with the [Checkly CLI](https://
 
 | Group | What it monitors | Defined in |
 |---|---|---|
-| **Playwright Checks** | One Browser Check per Playwright test in `src/tests/` | `src/__checks__/playwright/playwright-checks.check.ts` |
+| **Playwright Checks** | One check per Playwright test in `src/tests/`: a Browser Check, or a Multistep Check for API-only tests | `src/__checks__/playwright/playwright-checks.check.ts` |
 | **User API Checks** | One API Check per user in `users.json` | `src/__checks__/api/user-api-checks.check.ts` |
 
 - Checks run every 10 minutes from `us-east-1` and `eu-central-1`.
@@ -19,12 +19,12 @@ Monitoring as code for your synthetics, deployed with the [Checkly CLI](https://
 ├── eslint.config.mjs                      # Lint rules, including Playwright rules
 └── src/
     ├── tests/                             # ALL Playwright tests live here
-    │   ├── automation-exercise-checkout.spec.ts
-    │   └── pokemon-type.spec.ts
+    │   ├── automation-exercise-checkout.spec.ts  # Opens a page -> Browser Check
+    │   └── pokemon-type.api.spec.ts         # API only -> Multistep Check
     └── __checks__/
         ├── utils/alert-channels.ts        # Email alert channel
         ├── playwright/
-        │   └── playwright-checks.check.ts # Group 1: picks up every src/tests/**/*.spec.ts
+        │   └── playwright-checks.check.ts # Group 1: picks up every test in src/tests
         └── api/
             ├── users.json                 # The users to monitor
             ├── create-user-api-check.ts   # Reusable function that builds one API Check
@@ -81,7 +81,14 @@ The command runs from your terminal, but the checks run in Frankfurt. With `--re
 
 ### Add a new Playwright check
 
-Add a `*.spec.ts` file to `src/tests/`, then run `npx checkly test` and `npx checkly deploy`. You don't need to change any config. The group uses `testMatch: '../../tests/**/*.spec.ts'`, so every new file becomes a Browser Check in the **Playwright Checks** group.
+Add a test file to `src/tests/`, then run `npx checkly test` and `npx checkly deploy`. You don't need to change any config. Every new file becomes a check in the **Playwright Checks** group. The file name decides the check type:
+
+| File name | Check type | Use it when |
+|---|---|---|
+| `*.spec.ts` | Browser Check | The test opens a page (uses `page`) |
+| `*.api.spec.ts` | Multistep Check | The test only calls APIs (uses `request`) |
+
+Multistep Checks run Playwright without starting a browser, so they're faster and cheaper than Browser Checks. For example, `pokemon-type.api.spec.ts` only makes API calls, so it runs as a Multistep Check.
 
 ### Add, change or remove an API check
 
@@ -97,7 +104,7 @@ If you remove a user from the file, `checkly deploy` deletes that user's check. 
 
 Each fix is in its own commit, so you can see exactly what changed in the git history.
 
-**pokemon-type.spec.ts**
+**pokemon-type.api.spec.ts**
 
 - `forms` is an array. Use `forms[0].url`, not `forms.url`. `forms.url` was `undefined`, so the third request failed with `Invalid URL`.
 - `types[0].type` is an object (`{ name, url }`). Compare `types[0].type.name` with `'electric'`.
