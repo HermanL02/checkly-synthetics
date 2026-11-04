@@ -6,12 +6,18 @@
   "scripts": {
     "test:local": "playwright test",
     "test": "checkly test",
-    "deploy": "checkly deploy"
+    "deploy": "checkly deploy",
+    "lint": "eslint ."
   },
   "devDependencies": {
+    "@eslint/js": "9.39.5",
     "@playwright/test": "1.58.2",
     "checkly": "10.1.0",
-    "dotenv": "16.6.1"
+    "dotenv": "16.6.1",
+    "eslint": "9.39.5",
+    "eslint-plugin-playwright": "2.12.2",
+    "typescript": "5.9.3",
+    "typescript-eslint": "8.72.1"
   },
   "private": true
 }
