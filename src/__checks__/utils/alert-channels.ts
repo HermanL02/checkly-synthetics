@@ -1,12 +1,6 @@
-import { URL } from 'node:url'
-import {
-  EmailAlertChannel,
-  SlackAppAlertChannel,
-  WebhookAlertChannel
-} from 'checkly/constructs'
+import { EmailAlertChannel } from 'checkly/constructs'
 
 // Defines the settings for our alert channels. 
-// Not every channel is used in the rest of this demo project.
 // Note that you can create multiple channels of a type:
 // e.g. "prodEmailChannel" "frontendTeamEmailChannel" etc.
 // See all the options at https://www.checklyhq.com/docs/alerting-and-retries/alert-channels/
@@ -22,27 +16,5 @@ const sendDefaults = {
 
 export const emailChannel = new EmailAlertChannel('email-channel-1', {
   address: 'alerts@acme.com',
-  ...sendDefaults
-})
-
-export const slackChannel = new SlackAppAlertChannel('slack-channel-1', {
-  slackChannels: ['#ops'],
-  ...sendDefaults
-})
-
-export const webhookChannel = new WebhookAlertChannel('webhook-channel-1', {
-  name: 'Pushover webhook',
-  method: 'POST',
-  url: new URL('https://webhook.site/ddead495-8b15-4b0d-a25d-f6cda4144dc7'),
-  template: `{
-    "token":"FILL_IN_YOUR_SECRET_TOKEN_FROM_PUSHOVER",
-    "user":"FILL_IN_YOUR_USER_FROM_PUSHOVER",
-    "title":"{{ALERT_TITLE}}",
-    "html":1,
-    "priority":2,
-    "retry":30,
-    "expire":10800,
-    "message":"{{ALERT_TYPE}} {{STARTED_AT}} ({{RESPONSE_TIME}}ms) {{RESULT_LINK}}"
-  }`,
   ...sendDefaults
 })

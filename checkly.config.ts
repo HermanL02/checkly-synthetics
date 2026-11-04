@@ -25,37 +25,12 @@ const config = defineConfig({
      * See https://www.checklyhq.com/docs/cli/npm-packages/
      */
     runtimeId: '2025.04',
-    /* Failed check runs will not be retried per default. See `browserChecks` below for a retry example. */
+    /* Failed check runs will not be retried per default */
     retryStrategy: RetryStrategyBuilder.noRetries(),
     /* All checks will have this alert escalation policy defined */
     alertEscalationPolicy: AlertEscalationBuilder.runBasedEscalation(1),
     /* A glob pattern that matches the Checks inside your repo, see https://www.checklyhq.com/docs/constructs/including-checks/#checks-checkmatch */
     checkMatch: '**/__checks__/**/*.check.ts',
-    /* Global configuration option for Browser and Multistep checks. See https://www.checklyhq.com/docs/browser-checks/playwright-test/#global-configuration */
-    playwrightConfig: {
-      timeout: 30000,
-      use: {
-        baseURL: 'https://www.danube-web.shop',
-        viewport: { width: 1280, height: 720 },
-      },
-    },
-    browserChecks: {
-      /* A glob pattern matches any Playwright .spec.ts files and automagically creates a Browser Check. This way, you
-       * can just write Playwright code. See https://www.checklyhq.com/docs/constructs/including-checks/#browserchecks-testmatch
-       * */
-      testMatch: '**/__checks__/**/*.spec.ts',
-      /* Failed check runs will be retried before triggering alerts */
-      retryStrategy: RetryStrategyBuilder.fixedStrategy({ baseBackoffSeconds: 60, maxRetries: 4, sameRegion: true }),
-    },
-    // Playwright Check Suites definition, run the whole Playwright Test Suite in a Check
-    playwrightConfigPath: './playwright.config.ts',
-    playwrightChecks: [
-      {
-        logicalId: 'playwright-check-suite',
-        name: 'Playwright Check Suite TS',
-        //Use `testCommand: npx playwright test` to filter the tests you want to run
-      }
-    ],
   },
   cli: {
     /* The default datacenter location to use when running npx checkly test */
