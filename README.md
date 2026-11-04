@@ -63,8 +63,21 @@ Useful options:
 ```bash
 npx checkly test --tags playwright         # Only the Playwright group (or --tags api)
 npx checkly test --record                  # Save the run as a test session with a shareable link
+npx checkly test --location eu-central-1 --record   # Run from Frankfurt (EU)
 npx checkly deploy --preview               # Show what a deploy would change
 ```
+
+### Testing region-specific behavior (e.g. the EU GDPR dialog)
+
+Some sites change what they show based on the visitor's IP address. A cookie consent dialog for EU visitors is a common example. You won't see it when you run Playwright on your own machine outside the EU. Playwright's `geolocation`, `locale` and `timezoneId` options don't change your IP, so they don't help here either.
+
+To see what an EU visitor sees, run the checks from Checkly's EU location:
+
+```bash
+npx checkly test --location eu-central-1 --record
+```
+
+The command runs from your terminal, but the checks run in Frankfurt. With `--record`, the test session includes the trace, screenshots and video for each check, so you can see exactly what the page looked like there.
 
 ### Add a new Playwright check
 
