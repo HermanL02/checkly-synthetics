@@ -1,4 +1,4 @@
-import { CheckGroupV2, RetryStrategyBuilder } from 'checkly/constructs'
+import { AlertEscalationBuilder, CheckGroupV2, RetryStrategyBuilder } from 'checkly/constructs'
 import { emailChannel } from '../utils/alert-channels'
 
 /**
@@ -14,6 +14,7 @@ export const playwrightGroup = new CheckGroupV2('playwright-checks-group', {
   name: 'Playwright Checks',
   tags: ['playwright'],
   alertChannels: [emailChannel],
+  alertEscalationPolicy: AlertEscalationBuilder.runBasedEscalation(1),
   retryStrategy: RetryStrategyBuilder.linearStrategy({
     baseBackoffSeconds: 30,
     maxRetries: 1,

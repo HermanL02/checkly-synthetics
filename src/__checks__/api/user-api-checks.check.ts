@@ -1,4 +1,4 @@
-import { CheckGroupV2, RetryStrategyBuilder } from 'checkly/constructs'
+import { AlertEscalationBuilder, CheckGroupV2, RetryStrategyBuilder } from 'checkly/constructs'
 import { emailChannel } from '../utils/alert-channels'
 import { createUserApiCheck, User } from './create-user-api-check'
 import data from './users.json'
@@ -11,6 +11,7 @@ export const userApiGroup = new CheckGroupV2('user-api-checks-group', {
   name: 'User API Checks',
   tags: ['api'],
   alertChannels: [emailChannel],
+  alertEscalationPolicy: AlertEscalationBuilder.runBasedEscalation(1),
   retryStrategy: RetryStrategyBuilder.linearStrategy({
     baseBackoffSeconds: 30,
     maxRetries: 1,
